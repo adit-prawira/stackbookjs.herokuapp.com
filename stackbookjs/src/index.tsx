@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import { unpkgPathPlugin } from "./plugins/unpkg-path-plugin";
 import { fetchPlugin } from "./plugins/fetch-plugin";
-
+import CodeEditor from "./components/code-editor";
 const App = () => {
     const ref = useRef<any>();
     const iframe = useRef<any>();
@@ -24,6 +24,7 @@ const App = () => {
         if (!ref.current) {
             return;
         }
+
         iframe.current.srcdoc = html;
 
         // bundling process
@@ -64,6 +65,7 @@ const App = () => {
 
     return (
         <div>
+            <CodeEditor initialValue={"const a = 1;"} />
             <textarea
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
