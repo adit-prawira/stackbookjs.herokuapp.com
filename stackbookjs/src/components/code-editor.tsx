@@ -1,8 +1,10 @@
 import { useRef } from "react";
 import MonacoEditor, { EditorDidMount } from "@monaco-editor/react";
 import prettier from "prettier";
-import parser from "prettier/parser-babel";
+import * as parser from "prettier/parser-babel";
 import Button from "@material-ui/core/Button";
+import "bulmaswatch/slate/bulmaswatch.min.css";
+import "../styles/code-editor.css";
 // properties that declares the expected properties CodeEditor component will receive
 interface CodeEditorProps {
     initialValue: string;
@@ -44,11 +46,8 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
     };
 
     return (
-        <div>
-            <Button
-                onClick={onFormatClick}
-                style={{ border: "1px solid rgba(0,0,0,0.2)" }}
-            >
+        <div className="editor-wrapper">
+            <Button onClick={onFormatClick} className="format-button">
                 Re-Format
             </Button>
             <MonacoEditor

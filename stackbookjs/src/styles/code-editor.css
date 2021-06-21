@@ -1,0 +1,22 @@
+.editor-wrapper {
+    position: relative;
+    height: 100%;
+}
+
+.format-button {
+    color: rgb(106, 234, 161);
+    border: 1px solid rgb(106, 234, 161);
+}
+
+.editor-wrapper .format-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    z-index: 20;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.editor-wrapper:hover .format-button {
+    opacity: 1;
+}
