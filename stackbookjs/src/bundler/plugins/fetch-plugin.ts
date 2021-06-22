@@ -29,7 +29,7 @@ export const fetchPlugin = (inputCode: string) => {
 
             // load for any file that ends with .css, basically any css file
             build.onLoad({ filter: /.css$/ }, async (args: any) => {
-                // args.path is now https://unpkg.com/.../...css
+                // args.path is now https://unpkg.com/.../...csss
                 const { data, request } = await axios.get(args.path);
 
                 // replacing all newline character in the data with empty string
