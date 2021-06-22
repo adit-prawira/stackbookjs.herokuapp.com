@@ -1,10 +1,14 @@
 import { useRef } from "react";
+import "./syntax.css";
 import MonacoEditor, { EditorDidMount } from "@monaco-editor/react";
 import prettier from "prettier";
-import * as parser from "prettier/parser-babel";
+import parser from "prettier/parser-babel";
 import Button from "@material-ui/core/Button";
 import "bulmaswatch/slate/bulmaswatch.min.css";
 import "../styles/code-editor.css";
+import codeShift from "jscodeshift";
+import Highlighter from "monaco-jsx-highlighter";
+
 // properties that declares the expected properties CodeEditor component will receive
 interface CodeEditorProps {
     initialValue: string;
@@ -25,6 +29,22 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
 
         // updating MonacoEditor options
         monacoEditor.getModel()?.updateOptions({ tabSize: 2 });
+
+        // highlighter setup
+        const highlighter = new Highlighter(
+            //@ts-ignore
+            window.monaco,
+            codeShift,
+            monacoEditor
+        );
+
+        // Prevent the highlighter to console log error for every key press
+        highlighter.highLightOnDidChangeModelContent(
+            () => {},
+            () => {},
+            undefined,
+            () => {}
+        );
     };
 
     // format code editor with prettier (need reference from the monaco editor)
@@ -33,13 +53,15 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
         const unformattedCode = editorRef.current.getModel().getValue();
 
         // format the value with prettier
-        const formattedCode = prettier.format(unformattedCode, {
-            parser: "babel",
-            plugins: [parser],
-            useTabs: false,
-            semi: true,
-            singleQuote: true,
-        });
+        const formattedCode = prettier
+            .format(unformattedCode, {
+                parser: "babel",
+                plugins: [parser],
+                useTabs: false,
+                semi: true,
+                singleQuote: true,
+            })
+            .replace(/\n$/, "");
 
         // set the formatted value to the editor
         editorRef.current.setValue(formattedCode);

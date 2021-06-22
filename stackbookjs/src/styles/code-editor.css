@@ -18,5 +18,7 @@
 }
 
 .editor-wrapper:hover .format-button {
+    color: rgb(106, 234, 161);
+    border: 1px solid rgb(106, 234, 161);
     opacity: 1;
 }
