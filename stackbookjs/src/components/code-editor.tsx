@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import "./syntax.css";
+import "../styles/syntax.css";
 import MonacoEditor, { EditorDidMount } from "@monaco-editor/react";
 import prettier from "prettier";
 import parser from "prettier/parser-babel";
