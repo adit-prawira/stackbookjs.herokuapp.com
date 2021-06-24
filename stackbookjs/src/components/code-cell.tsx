@@ -3,6 +3,7 @@ import CodeEditor from "./code-editor";
 import Button from "@material-ui/core/Button";
 import Preview from "./preview";
 import bundle from "../bundler";
+import Resizable from "./resizable";
 
 const CodeCell = () => {
     const [code, setCode] = useState("");
@@ -15,24 +16,34 @@ const CodeCell = () => {
     };
 
     return (
-        <div>
-            <CodeEditor
-                initialValue={"const a = 1;"}
-                onChange={(value) => setInput(value)}
-            />
+        <Resizable direction="vertical">
+            <div
+                style={{
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "row",
+                }}
+            >
+                <Resizable direction="horizontal">
+                    <CodeEditor
+                        initialValue={"const a = 1;"}
+                        onChange={(value) => setInput(value)}
+                    />
+                </Resizable>
 
-            <div>
-                <Button
-                    onClick={onClick}
-                    color="primary"
-                    variant="outlined"
-                    style={{ width: "100%", border: "" }}
-                >
-                    Run
-                </Button>
+                {/* <div>
+                    <Button
+                        onClick={onClick}
+                        color="primary"
+                        variant="outlined"
+                        style={{ width: "100%", border: "" }}
+                    >
+                        Run
+                    </Button>
+                </div> */}
+                <Preview code={code} />
             </div>
-            <Preview code={code} />
-        </div>
+        </Resizable>
     );
 };
 export default CodeCell;
