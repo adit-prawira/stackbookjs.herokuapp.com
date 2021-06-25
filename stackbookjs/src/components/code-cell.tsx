@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CodeEditor from "./code-editor";
-import Button from "@material-ui/core/Button";
 import Preview from "./preview";
 import bundle from "../bundler";
 import Resizable from "./resizable";
@@ -8,13 +7,22 @@ import Resizable from "./resizable";
 const CodeCell = () => {
     const [code, setCode] = useState("");
     const [input, setInput] = useState("");
-
-    const onClick = async () => {
-        const output = await bundle(input);
-        // bundling process
-        setCode(output);
-    };
-
+    const [error, setError] = useState("");
+    // Every time the code inside the editor changes, run the bundling logic in 1 second.
+    // Hence, auto bundling or run the code automatically
+    useEffect(() => {
+        const timer = setTimeout(async () => {
+            const output = await bundle(input);
+            // bundling process
+            setCode(output.code);
+            setError(output.error);
+        }, 750);
+        return () => {
+            // the next time the useEffect is called,
+            // cancel the previous timer that has been setup
+            clearTimeout(timer);
+        };
+    }, [input]);
     return (
         <Resizable direction="vertical">
             <div
@@ -31,17 +39,7 @@ const CodeCell = () => {
                     />
                 </Resizable>
 
-                {/* <div>
-                    <Button
-                        onClick={onClick}
-                        color="primary"
-                        variant="outlined"
-                        style={{ width: "100%", border: "" }}
-                    >
-                        Run
-                    </Button>
-                </div> */}
-                <Preview code={code} />
+                <Preview code={code} error={error} />
             </div>
         </Resizable>
     );
