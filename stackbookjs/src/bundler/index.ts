@@ -26,6 +26,7 @@ const bundle = async (rawCode: string) => {
     } catch (err) {
         return {
             code: "",
+            //@ts-ignore
             error: err.message,
         };
     }
