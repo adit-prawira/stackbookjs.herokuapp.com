@@ -4,6 +4,8 @@ import "../styles/preview.css";
 interface PreviewProps {
     code: string;
 }
+
+// HTML snippet for the preview window
 const html = `
     <html>
         <head>
@@ -24,6 +26,7 @@ const html = `
             </script>
         </body>
     </html>`;
+
 const Preview: React.FC<PreviewProps> = ({ code }) => {
     const iframe = useRef<any>();
     useEffect(() => {
