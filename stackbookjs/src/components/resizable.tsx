@@ -1,4 +1,3 @@
-import React from "react";
 import "../styles/resizable.css";
 import { ResizableBox, ResizableBoxProps } from "react-resizable";
 
@@ -11,21 +10,23 @@ const Resizable: React.FC<ResizableProps> = ({ direction, children }) => {
 
     if (direction === "horizontal") {
         resizableProps = {
-            maxConstraints: [window.innerWidth * 0.3, Infinity],
-            minConstraints: [window.innerWidth * 0.75, Infinity],
+            className: "resize-horizontal",
+            minConstraints: [window.innerWidth * 0.2, Infinity],
+            maxConstraints: [window.innerWidth * 0.75, Infinity],
             height: Infinity,
-            width: Infinity,
+            width: window.innerWidth * 0.75,
             resizeHandles: ["e"],
         };
     } else {
         resizableProps = {
-            maxConstraints: [Infinity, window.innerHeight * 0.9],
             minConstraints: [Infinity, window.innerHeight * 0.3],
+            maxConstraints: [Infinity, window.innerHeight * 0.9],
             height: 300,
             width: Infinity,
             resizeHandles: ["s"],
         };
     }
+
     return <ResizableBox {...resizableProps}>{children}</ResizableBox>;
 };
 
