@@ -1,4 +1,4 @@
-import { ActionTypes } from "../action-types";
+import { ActionTypes } from "../action-creators/action-types";
 import { CellTypes } from "../cell";
 export type DirectionTypes = "up" | "down";
 export interface MoveCellAction {

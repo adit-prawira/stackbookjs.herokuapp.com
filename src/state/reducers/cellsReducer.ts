@@ -1,5 +1,5 @@
 import produce from "immer";
-import { ActionTypes } from "../action-types";
+import { ActionTypes } from "../action-creators/action-types";
 import { Action } from "../actions";
 import { Cell } from "../cell";
 
