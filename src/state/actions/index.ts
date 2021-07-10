@@ -8,7 +8,6 @@ export interface MoveCellAction {
         direction: DirectionTypes;
     };
 }
-
 export interface DeleteCellAction {
     type: ActionTypes.DELETE_CELL;
     payload: string;
