@@ -1,4 +1,4 @@
-import "bulmaswatch/slate/bulmaswatch.min.css";
+import "bulmaswatch/cyborg/bulmaswatch.min.css";
 import ReactDOM from "react-dom";
 import CellList from "./components/cell-list";
 import { Provider } from "react-redux";
@@ -6,7 +6,7 @@ import { store } from "./state";
 
 const App = () => {
     return (
-        <div>
+        <div style={{ margin: "1%" }}>
             <CellList />
         </div>
     );
