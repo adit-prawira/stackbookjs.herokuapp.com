@@ -25,11 +25,11 @@ function randomId() {
 }
 
 const cellsReducer = produce(
-    (state: CellsState = initialState, action: Action) => {
+    (state: CellsState = initialState, action: Action): CellsState => {
         switch (action.type) {
             case ActionTypes.DELETE_CELL:
                 delete state.data[action.payload]; // delete the cell with the given id
-                state.order.filter((id) => id !== action.payload); // filter all id that is not the given one
+                state.order = state.order.filter((id) => id !== action.payload); // filter all id that is not the given one
                 return state;
             case ActionTypes.MOVE_CELL:
                 const { direction } = action.payload; // direction = up | down
