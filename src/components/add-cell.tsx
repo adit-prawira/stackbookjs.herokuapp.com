@@ -4,21 +4,21 @@ import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 
 interface AddCellProps {
-    nextCellId: string | null;
+    previousCellId: string | null;
+    forceVisible?: boolean; // optional prop
 }
 
-const AddCell: React.FC<AddCellProps> = ({ nextCellId }) => {
-    const { insertCellBefore } = useActions();
+const AddCell: React.FC<AddCellProps> = ({ forceVisible, previousCellId }) => {
+    const { insertCellAfter } = useActions();
     return (
-        <div className="add-cell">
+        <div className={`add-cell ${forceVisible && "force-visible"}`}>
             <div className="add-buttons">
                 <Button
                     style={{
                         backgroundColor: "rgb(106, 234, 161)",
-                    
                     }}
                     startIcon={<AddIcon />}
-                    onClick={() => insertCellBefore(nextCellId, "code")}
+                    onClick={() => insertCellAfter(previousCellId, "code")}
                     id="button"
                     variant="contained"
                 >
@@ -27,10 +27,9 @@ const AddCell: React.FC<AddCellProps> = ({ nextCellId }) => {
                 <Button
                     style={{
                         backgroundColor: "rgb(106, 234, 161)",
-                    
                     }}
                     startIcon={<AddIcon />}
-                    onClick={() => insertCellBefore(nextCellId, "text")}
+                    onClick={() => insertCellAfter(previousCellId, "text")}
                     id="button"
                     variant="contained"
                 >

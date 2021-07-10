@@ -45,22 +45,22 @@ const cellsReducer = produce(
                 state.order[i] = state.order[targetIndex];
                 state.order[targetIndex] = action.payload.id;
                 return state;
-            case ActionTypes.INSERT_CELL_BEFORE:
+            case ActionTypes.INSERT_CELL_AFTER:
                 const cell: Cell = {
                     content: "",
                     type: action.payload.type,
                     id: randomId(),
                 };
                 state.data[cell.id] = cell; // add new cell to the state data
-                const indexBefore = state.order.findIndex(
+                const indexPosition = state.order.findIndex(
                     (id) => id === action.payload.id
                 );
 
                 // Insert a new cell before a specific cell with a given id
-                if (indexBefore < 0) {
-                    state.order.push(cell.id);
+                if (indexPosition < 0) {
+                    state.order.unshift(cell.id);
                 } else {
-                    state.order.splice(indexBefore, 0, cell.id);
+                    state.order.splice(indexPosition + 1, 0, cell.id);
                 }
                 return state;
             case ActionTypes.UPDATE_CELL: // updating the content of the cell
