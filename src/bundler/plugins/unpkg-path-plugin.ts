@@ -16,7 +16,6 @@ export const unpkgPathPlugin = () => {
                     namespace: "a",
                 };
             });
-
             // find any requires or imports file with ./ or ../
             build.onResolve({ filter: /^\.+\// }, (args: any) => {
                 return {
@@ -27,8 +26,15 @@ export const unpkgPathPlugin = () => {
                     ).href,
                 };
             });
-
             build.onResolve({ filter: /.*/ }, async (args: any) => {
+                if (args.path.includes("dom-helpers")) {
+                    const params = args.path.split("/");
+                    const newPath = params[0] + "/cjs/" + params[1];
+                    return {
+                        path: `https://unpkg.com/${newPath}`,
+                        namespace: "a",
+                    };
+                }
                 return {
                     path: `https://unpkg.com/${args.path}`,
                     namespace: "a",

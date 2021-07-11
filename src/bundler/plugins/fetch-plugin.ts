@@ -58,17 +58,22 @@ export const fetchPlugin = (inputCode: string) => {
             });
 
             build.onLoad({ filter: /.*/ }, async (args: any) => {
-                // args.path is now https://unpkg.com/.../...js
-                const { data, request } = await axios.get(args.path);
+                console.log("The ARGS", args);
+                try {
+                    // args.path is now https://unpkg.com/.../...js
+                    const { data, request } = await axios.get(args.path);
 
-                // storing file or module in cache
-                const result: esbuild.OnLoadResult = {
-                    loader: "jsx",
-                    contents: data,
-                    resolveDir: new URL("./", request.responseURL).pathname,
-                };
-                await fileCache.setItem(args.path, result);
-                return result;
+                    // storing file or module in cache
+                    const result: esbuild.OnLoadResult = {
+                        loader: "jsx",
+                        contents: data,
+                        resolveDir: new URL("./", request.responseURL).pathname,
+                    };
+                    await fileCache.setItem(args.path, result);
+                    return result;
+                } catch (err) {
+                    console.log("NGENTOT", err);
+                }
             });
         },
     };
