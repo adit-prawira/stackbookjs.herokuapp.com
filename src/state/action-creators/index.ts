@@ -6,7 +6,10 @@ import {
     InsertCellAfterAction,
     MoveCellAction,
     DirectionTypes,
+    Action,
 } from "../actions";
+import { Dispatch } from "redux";
+import bundle from "../../bundler";
 
 // Action Creators for CRUD and Interaction process with the text or code cells
 export const moveCell = (
@@ -27,3 +30,21 @@ export const insertCellAfter = (
 export const updateCell = (id: string, content: string): UpdateCellAction => {
     return { type: ActionTypes.UPDATE_CELL, payload: { id, content } };
 };
+
+// Action Creators for bundling process
+export const createBundle =
+    (cellId: string, input: string) => async (dispatch: Dispatch<Action>) => {
+        dispatch({ type: ActionTypes.BUNDLE_START, payload: { cellId } });
+        const result = await bundle(input);
+        dispatch({
+            type: ActionTypes.BUNDLE_COMPLETE,
+            payload: {
+                cellId,
+                bundle: {
+                    code: result.code,
+                    //@ts-ignore
+                    err: result.err,
+                },
+            },
+        });
+    };

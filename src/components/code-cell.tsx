@@ -1,33 +1,28 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import CodeEditor from "./code-editor";
 import Preview from "./preview";
-import bundle from "../bundler";
 import Resizable from "./resizable";
 import { Cell } from "../state";
 import { useActions } from "../hooks/use-actions";
-
+import { useTypeSelector } from "../hooks/use-type-selector";
 interface CodeCellProps {
     cell: Cell;
 }
 const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
-    const [code, setCode] = useState("");
-    const [error, setError] = useState("");
-    const { updateCell } = useActions();
+    const { updateCell, createBundle } = useActions();
+    const bundle = useTypeSelector((state) => state.bundles[cell.id]);
     // Every time the code inside the editor changes, run the bundling logic in 1 second.
     // Hence, auto bundling or run the code automatically
     useEffect(() => {
         const timer = setTimeout(async () => {
-            const output = await bundle(cell.content);
-            // bundling process
-            setCode(output.code);
-            setError(output.error);
+            createBundle(cell.id, cell.content);
         }, 750);
         return () => {
             // the next time the useEffect is called,
             // cancel the previous timer that has been setup
             clearTimeout(timer);
         };
-    }, [cell.content]);
+    }, [cell, createBundle]);
     return (
         <Resizable direction="vertical">
             <div
@@ -43,7 +38,7 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
                         onChange={(value) => updateCell(cell.id, value)}
                     />
                 </Resizable>
-                <Preview code={code} error={error} />
+                {bundle && <Preview code={bundle.code} error={bundle.err} />}
             </div>
         </Resizable>
     );
