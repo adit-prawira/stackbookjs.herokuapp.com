@@ -29,7 +29,6 @@ const TextEditor: React.FC<TextEditorProps> = ({ cell }) => {
             document.removeEventListener("click", listener, { capture: true });
         };
     }, []);
-
     return (
         <div
             onClick={() => setIsEdit(true)}
