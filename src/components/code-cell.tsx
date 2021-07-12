@@ -5,8 +5,10 @@ import Resizable from "./resizable";
 import { Cell } from "../state";
 import { useActions } from "../hooks/use-actions";
 import { useTypeSelector } from "../hooks/use-type-selector";
+import { useCumulativeCode } from "../hooks/use-cumulative-code";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import "../styles/code-cell.css";
+
 interface CodeCellProps {
     cell: Cell;
 }
@@ -16,30 +18,17 @@ const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
     const bundle = useTypeSelector((state) => state.bundles[cell.id]);
 
     // get all codes from previous cells
-    const cumulativeCode = useTypeSelector((state) => {
-        const { data, order } = state.cells;
-        const orderedCells = order.map((id) => data[id]);
-        const codes = [];
-        for (let c of orderedCells) {
-            if (c.type === "code") {
-                codes.push(c.content);
-            }
-            if (c.id === cell.id) {
-                break;
-            }
-        }
-        return codes;
-    });
+    const cumulativeCode = useCumulativeCode(cell.id);
 
     // Every time the code inside the editor changes, run the bundling logic in 1 second.
     // Hence, auto bundling or run the code automatically
     useEffect(() => {
         if (!bundle) {
-            createBundle(cell.id, cumulativeCode.join("\n"));
+            createBundle(cell.id, cumulativeCode);
             return;
         }
         const timer = setTimeout(async () => {
-            createBundle(cell.id, cumulativeCode.join("\n"));
+            createBundle(cell.id, cumulativeCode);
         }, 750);
         return () => {
             // the next time the useEffect is called,

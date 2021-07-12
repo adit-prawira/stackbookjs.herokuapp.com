@@ -2,7 +2,9 @@ import "../styles/add-cell.css";
 import { useActions } from "../hooks/use-actions";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
+import CodeIcon from "@material-ui/icons/Code";
 
+import ViewHeadlineIcon from "@material-ui/icons/ViewHeadline";
 interface AddCellProps {
     previousCellId: string | null;
     forceVisible?: boolean; // optional prop
@@ -22,7 +24,7 @@ const AddCell: React.FC<AddCellProps> = ({ forceVisible, previousCellId }) => {
                     id="button"
                     variant="contained"
                 >
-                    Code Editor
+                    Code Editor <CodeIcon />
                 </Button>
                 <Button
                     style={{
@@ -33,7 +35,7 @@ const AddCell: React.FC<AddCellProps> = ({ forceVisible, previousCellId }) => {
                     id="button"
                     variant="contained"
                 >
-                    Text Editor
+                    Text Editor <ViewHeadlineIcon />
                 </Button>
             </div>
             <div className="divider"></div>

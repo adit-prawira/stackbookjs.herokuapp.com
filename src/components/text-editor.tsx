@@ -20,7 +20,6 @@ const TextEditor: React.FC<TextEditorProps> = ({ cell }) => {
                 event.target &&
                 ref.current.contains(event.target as Node)
             ) {
-                console.log("inside editor");
                 return;
             }
             setIsEdit(false);
