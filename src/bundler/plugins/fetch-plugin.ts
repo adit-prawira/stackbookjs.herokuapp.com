@@ -58,7 +58,6 @@ export const fetchPlugin = (inputCode: string) => {
             });
 
             build.onLoad({ filter: /.*/ }, async (args: any) => {
-                console.log("The ARGS", args);
                 try {
                     // args.path is now https://unpkg.com/.../...js
                     const { data, request } = await axios.get(args.path);
@@ -72,7 +71,7 @@ export const fetchPlugin = (inputCode: string) => {
                     await fileCache.setItem(args.path, result);
                     return result;
                 } catch (err) {
-                    console.log("NGENTOT", err);
+                    console.log(err);
                 }
             });
         },

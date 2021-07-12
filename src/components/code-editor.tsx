@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import "../styles/syntax.css";
 import MonacoEditor, { EditorDidMount } from "@monaco-editor/react";
+
 import prettier from "prettier";
 import parser from "prettier/parser-babel";
 import Button from "@material-ui/core/Button";
@@ -53,6 +54,7 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ initialValue, onChange }) => {
         const unformattedCode = editorRef.current.getModel().getValue();
 
         // format the value with prettier
+
         const formattedCode = prettier
             .format(unformattedCode, {
                 parser: "babel",
