@@ -12,6 +12,7 @@ interface CellsState {
     };
 }
 
+
 const initialState: CellsState = {
     loading: false,
     error: null,
